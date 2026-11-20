@@ -1,0 +1,118 @@
+=== 1. Overtime vs attrition (chi-square test of independence) ===
+        Attrition
+OverTime  No Yes
+     No  944 110
+     Yes 289 127
+        Attrition
+OverTime   No  Yes
+     No  89.6 10.4
+     Yes 69.5 30.5
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tab_ot
+X-squared = 87.564, df = 1, p-value < 2.2e-16
+
+Cramer's V: 0.246 
+
+=== 2. Department vs attrition (chi-square test of independence) ===
+                        Attrition
+Department                No Yes
+  Research & Development 828 133
+  Human Resources         51  12
+  Sales                  354  92
+
+	Pearson's Chi-squared test
+
+data:  tab_dep
+X-squared = 10.796, df = 2, p-value = 0.004526
+
+Cramer's V: 0.086 
+
+=== 3. Monthly income: leavers vs stayers ===
+  Attrition MonthlyIncome
+1        No          5204
+2       Yes          3202
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  MonthlyIncome by Attrition
+W = 191600, p-value = 2.953e-14
+alternative hypothesis: true location shift is not equal to 0
+
+
+	Welch Two Sample t-test
+
+data:  MonthlyIncome by Attrition
+t = 7.4826, df = 412.74, p-value = 4.434e-13
+alternative hypothesis: true difference in means between group No and group Yes is not equal to 0
+95 percent confidence interval:
+ 1508.244 2583.050
+sample estimates:
+ mean in group No mean in group Yes 
+         6832.740          4787.093 
+
+=== 4. Tenure: years at company, leavers vs stayers ===
+  Attrition YearsAtCompany
+1        No              6
+2       Yes              3
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  YearsAtCompany by Attrition
+W = 189639, p-value = 2.915e-13
+alternative hypothesis: true location shift is not equal to 0
+
+=== 5. Logistic regression: what predicts leaving? ===
+
+Call:
+glm(formula = left ~ OverTime + YearsAtCompany + income_k + Age + 
+    JobSatisfaction + WorkLifeBalance + EnvironmentSatisfaction + 
+    MaritalStatus + Department + DistanceFromHome, family = binomial, 
+    data = hr)
+
+Coefficients:
+                           Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                1.292582   0.553021   2.337 0.019423 *  
+OverTimeYes                1.637393   0.165819   9.875  < 2e-16 ***
+YearsAtCompany            -0.033928   0.019244  -1.763 0.077884 .  
+income_k                  -0.102626   0.029348  -3.497 0.000471 ***
+Age                       -0.028333   0.010302  -2.750 0.005958 ** 
+JobSatisfaction           -0.347677   0.071395  -4.870 1.12e-06 ***
+WorkLifeBalance           -0.299448   0.110983  -2.698 0.006973 ** 
+EnvironmentSatisfaction   -0.347934   0.073370  -4.742 2.11e-06 ***
+MaritalStatusDivorced     -0.306104   0.235896  -1.298 0.194418    
+MaritalStatusSingle        0.921680   0.176090   5.234 1.66e-07 ***
+DepartmentHuman Resources  0.725439   0.369711   1.962 0.049742 *  
+DepartmentSales            0.660256   0.172428   3.829 0.000129 ***
+DistanceFromHome           0.030881   0.009526   3.242 0.001188 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1298.6  on 1469  degrees of freedom
+Residual deviance: 1033.2  on 1457  degrees of freedom
+AIC: 1059.2
+
+Number of Fisher Scoring iterations: 6
+
+
+Odds ratios with 95% confidence intervals (Wald):
+                          odds_ratio 2.5 % 97.5 %
+(Intercept)                    3.642 1.232 10.767
+OverTimeYes                    5.142 3.715  7.116
+YearsAtCompany                 0.967 0.931  1.004
+income_k                       0.902 0.852  0.956
+Age                            0.972 0.953  0.992
+JobSatisfaction                0.706 0.614  0.812
+WorkLifeBalance                0.741 0.596  0.921
+EnvironmentSatisfaction        0.706 0.612  0.815
+MaritalStatusDivorced          0.736 0.464  1.169
+MaritalStatusSingle            2.514 1.780  3.550
+DepartmentHuman Resources      2.066 1.001  4.263
+DepartmentSales                1.935 1.380  2.713
+DistanceFromHome               1.031 1.012  1.051
+
+Accuracy at 0.5 cut-off: 0.863  | baseline (always 'No'): 0.839 
+Leavers correctly flagged (recall): 0.262 

@@ -52,7 +52,14 @@ SQL techniques used: aggregation with `GROUP BY`/`HAVING`, conditional aggregati
 
 Full output: `output/stats_results.txt`. Charts: `output/attrition_by_overtime.png`, `output/attrition_by_tenure.png`.
 
-<!-- TODO after running R: add the 2-3 headline numbers here, e.g. the overtime odds ratio and its CI. -->
+### Key findings (R)
+
+- **Overtime is the strongest signal.** χ²(1) = 87.6, p < 0.001, Cramér's V = 0.25. In the regression, overtime multiplies the odds of leaving by **5.1** (95% CI 3.7–7.1), holding the other factors constant.
+- **Department matters, but weakly on its own.** χ²(2) = 10.8, p = 0.005, Cramér's V = 0.09. After controls, Sales staff have about 1.9x the odds of leaving compared with R&D (CI 1.4–2.7).
+- **Leavers earn less.** Median monthly income is 3,202 for leavers and 5,204 for stayers (Wilcoxon p < 0.001). Each extra 1,000 per month goes with about 10% lower odds of leaving (OR 0.90, CI 0.85–0.96).
+- **Tenure works through other factors.** Leavers have a median tenure of 3 years against 6 for stayers (Wilcoxon p < 0.001). In the regression, tenure is no longer significant (OR 0.97, p = 0.08) once age, income and overtime are included. Short tenure seems to proxy for being young, junior and lower paid.
+- **Other significant factors:** being single (OR 2.5), each step up in job satisfaction (OR 0.71) or environment satisfaction (OR 0.71), better work-life balance (OR 0.74), and commute distance (+3% odds per unit of distance; the dataset does not state the unit).
+- **Model fit:** 86.3% accuracy against an 83.9% "nobody leaves" baseline. The model catches only 26% of leavers at a 0.5 cut-off. It is useful for explaining what drives attrition, not for predicting who will leave.
 
 ## What HR could do with this
 

@@ -74,7 +74,7 @@ bp <- barplot(rates_ot, col = c("grey70", "firebrick"), ylim = c(0, 40),
               ylab = "Attrition rate (%)", xlab = "Works overtime",
               main = "Attrition rate by overtime")
 text(bp, rates_ot + 2, paste0(round(rates_ot, 1), "%"))
-dev.off()
+invisible(dev.off())
 
 hr$tenure_band <- cut(hr$YearsAtCompany, breaks = c(-1, 0, 2, 5, 10, Inf),
                       labels = c("<1", "1-2", "3-5", "6-10", "11+"))
@@ -84,6 +84,6 @@ bp <- barplot(rates_ten, col = "steelblue", ylim = c(0, 45),
               ylab = "Attrition rate (%)", xlab = "Years at company",
               main = "Attrition rate by tenure")
 text(bp, rates_ten + 2, paste0(round(rates_ten, 1), "%"))
-dev.off()
+invisible(dev.off())
 
 cat("Done. See output/ for results and charts.\n")
